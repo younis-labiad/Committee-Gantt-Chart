@@ -1,0 +1,574 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&display=swap" rel="stylesheet">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Naskh+Arabic:wght@400..700&family=Scheherazade+New:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <title>Highcharts Gantt Example</title>
+
+		<style type="text/css">
+#container {
+    max-width: 1850px;
+    min-width: 800px;
+    height: auto;
+    margin: 0.5em auto;
+}
+
+.scrolling-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.committee{
+font-family: amiri;
+color: white;
+text-align: center;
+background-color:rgb(184, 11, 11);
+}
+		</style>
+	</head>
+	<body>
+        <div class="committee">
+            <h1>متابعة اللجان و فرق العمل</h1>
+           </div>
+           
+<script src="./highcharts-gantt.js"></script>
+<script src="./exporting.js"></script>
+<script src="./accessibility.js"></script>
+
+<div class="scrolling-container">
+	<div id="container"></div>
+</div>
+
+
+		<script type="text/javascript">
+Highcharts.ganttChart('container', {
+
+
+
+    lang: {
+        accessibility: {
+            axis: {
+                xAxisDescriptionPlural: 'The chart has a two-part X axis ' +
+                    'showing time in both week numbers and days.',
+                yAxisDescriptionSingular: 'The chart has a tabular Y axis ' +
+                    'showing a data table row for each point.'
+            }
+        }
+    },
+
+    accessibility: {
+        point: {
+            style:{
+                align:'center',
+            },
+            descriptionFormat: '{#if milestone}' +
+                '{name}, milestone for {yCategory} at {x:%Y-%m-%d}.' +
+                '{else}' +
+                '{name}, assigned to {yCategory} from {x:%Y-%m-%d} to ' +
+                '{x2:%Y-%m-%d}.' +
+                '{/if}'
+        }
+    },
+
+    xAxis: {
+        tickPixelInterval: 70
+    },
+
+    yAxis: {
+        type: 'category',
+        grid: {
+            enabled: true,
+            borderColor: 'rgba(0,0,0,0.3)',
+            borderWidth: 1,
+            columns: [{
+                title: {  
+                    style:{
+                        fontSize:15,
+                        fontWeight:'bold',
+                        color:'black',
+                    },
+                    text: 'اللجنة',
+                },
+                labels: {
+                    style:{
+                        fontSize:15,
+                        fontWeight:'bold',
+                        fontFamily:'Noto Naskh Arabic',
+                        color:'black'
+                    },
+                    format: '{point.name}',
+                    align: 'right',
+                    fontFamily: 'serif',
+
+
+                }
+            }, {
+                title: {
+                    style:{
+                        fontSize:15,
+                        fontWeight:'bold',
+                        color:'black'
+                    },
+                    text: 'رئيس اللجنة'
+                },
+                labels: {
+                    format: '{point.assignee}',
+                    style:{
+                        fontSize:15,
+                        fontWeight:'bold',
+                        fontFamily:'Noto Naskh Arabic'
+                    }
+                }
+            }, {
+                title: {
+                    style:{
+                        fontSize:15,
+                        fontWeight:'bold',
+                        color:'black'
+                    },
+                    text: 'عدد الايام'
+                },
+                labels: {
+                    format: '{(divide (subtract point.x2 point.x) ' +
+                        '86400000)}',
+                        style:{
+                        fontSize:15,
+                        fontWeight:'bold',
+                    }
+
+                }
+            }, {
+                labels: {
+                    format: '{point.start:%e. %b}',
+                    style:{
+                        fontSize:15,
+                        fontWeight:'bold',
+                    }
+
+                },
+                title: {
+                    style:{
+                        fontSize:15,
+                        fontWeight:'bold',
+                        color:'black'
+                    },
+                    text: 'تاريخ البدء'
+                }
+            }, {
+                title: {
+                    style:{
+                        fontSize:15,
+                        fontWeight:'bold',
+                        color:'black'
+                    },
+                    text: 'تاريخ الانتهاء'
+                },
+                offset: 30,
+                labels: {
+                    format: '{point.end:%e. %b}',
+                    style:{
+                        fontSize:15,
+                        fontWeight:'bold',
+                    }
+
+                }
+            }]
+        }
+    },
+
+    tooltip: {
+        xDateFormat: '%e %b %Y',
+        backgroundColor: '#FCFFC5'
+    },
+
+
+    series: [{
+
+        // Always Committee
+        name: '',
+        data: [{
+           
+            start: Date.UTC(2022,0,3),
+            end: Date.UTC(2024,11,31),
+            name: ' لجنة دراسة شكاوي وتظلمات العاملين بالقطاع ',
+            assignee: 'حسين محمود طويلب',
+            y: 0,
+            color:'#FFC000'//orange color
+        },{
+            start: Date.UTC(2022,2,16),
+            end: Date.UTC(2024,11,31),
+            name: ' لجنة العليا للطواريء والفرق التابعة لها',
+            assignee: 'حسين محمود طويلب',
+            y: 1,
+            color:'#FFC000'//orange color
+        },{
+            start: Date.UTC(2023,11,19),
+            end: Date.UTC(2024,11,31),
+            name: 'اللجنة العليا لاعداد القوائم المالية المجمعة',
+            assignee: 'محمد عمار ابوقرين ',
+            y: 2,
+            color:'#FFC000'//orange color
+        },{
+            start: Date.UTC(2024,0,25),
+            end: Date.UTC(2024,11,31),
+            name: 'فريق عمل لاداره مشروع البنيه التحتيه لبوابه العالم ',
+            assignee: 'عياد زين الدين',
+            y: 3,
+            color:'#FFC000'//orange color
+        },
+        //Continued Committee
+        {
+            start: Date.UTC(2022,2,10),
+            end: Date.UTC(2024,11,31),
+            name: 'اللجنة العليا لتنفيذ مبادرة الخروج الامن',
+            assignee: 'محمد الاندلسي ابوبكر',
+            y: 4,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2022,4,10),
+            end: Date.UTC(2024,11,31),
+            name: 'استبدال مدير المتابعة للجنة قفل الحسابات الختامية',
+            assignee: 'محمد عمار ابوقرين ',
+            y: 5,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2022,4,18),
+            end: Date.UTC(2024,11,31),
+            name: 'فريق عمل مؤقت لحل المشاكل العالقة بين الشركات',
+            assignee: 'محمد الاندلسي ابوبكر',
+            y: 6,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2022,4,26),
+            end: Date.UTC(2024,11,31),
+            name: 'مشروع منصة ليبيا للديمقراطية الرقمية',
+            assignee: 'عمر مفتاح ابوطلاق',
+            y: 7,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2022,5,14),
+            end: Date.UTC(2024,11,31),
+            name: ' مشروع التدقيق العميق لحزم البيانات',
+            assignee: 'توفيق رجب المهيدوي ',
+            y: 8,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2022,5,22),
+            end: Date.UTC(2024,11,31),
+            name: ' مشروع الحماية الرقمية الشاملة',
+            assignee: 'خالد عبدالمجيد الزغبي ',
+            y: 9,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2022,6,24),
+            end: Date.UTC(2024,11,31),
+            name: 'مشروع الحماية الرقمية الشاملة',
+            assignee: 'إيهاب إبراهيم الرفاعي ',
+            y: 10,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2022,6,28),
+            end: Date.UTC(2024,11,31),
+            name: ' kPMG تنفيذ الاتفاقية الاطارية المبرمة مع شركة',
+            assignee: 'يوسف محمد ابوحجر ',
+            y: 11,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2022,8,18),
+            end: Date.UTC(2024,11,31),
+            name: 'مشروع المعلومات الجغرافية',
+            assignee: 'عماد منصور ابولائحة ',
+            y: 12,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2022,10,27),
+            end: Date.UTC(2024,11,31),
+            name: 'فريق خدمة التجوال المحلي وتقرير حكم',
+            assignee: 'انيس عبدالرحمن الطالب',
+            y: 13,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2022,11,12),
+            end: Date.UTC(2024,11,31),
+            name: 'اللجنة العليا للتدريب',
+            assignee: 'ابراهيم احمد بادي',
+            y: 14,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2022,11,27),
+            end: Date.UTC(2024,11,31),
+            name: 'فريق لمشروع المركز الإعلامي الرقمي',
+            assignee: 'محمد يوسف ابديري ',
+            y: 15,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2022,11,29),
+            end: Date.UTC(2024,11,31),
+            name: 'فريق عمل المنصة الرقمية للرعاية الصحية',
+            assignee: 'عمر مفتاح ابوطلاق ',
+            y: 16,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2023,1,19),
+            end: Date.UTC(2024,11,31),
+            name: 'فريق عمل للميكنة وتفعيل الانظمة الالكترونية بالشركة',
+            assignee: 'وائل رمضان عبدالجليل ',
+            y: 17,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2023,4,31),
+            end: Date.UTC(2024,11,31),
+            name: 'مشروع مواقع الطاقة المتجددة بالطرق الصحراوية',
+            assignee: 'نادر محمد يوسف ',
+            y: 18,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2023,5,6),
+            end: Date.UTC(2024,11,31),
+            name: 'مشروع الالياف البصرية للمحطات اللاسلكية',
+            assignee: 'مسعود عبدالقادر الاوجلي ',
+            y: 19,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2023,6,31),
+            end: Date.UTC(2024,11,31),
+            name: 'فريق عمل المنصة الرقمية لتقديم طلبات الحصول علي تأشيرة',
+            assignee: 'عمر مفتاح ابوطلاق',
+            y: 20,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2023,8,5),
+            end: Date.UTC(2024,11,31),
+            name: 'مشروع إنهاء ظاهرة التشويش علي شبكات الراديو',
+            assignee: 'عبدالرؤوف احمد القانقا ',
+            y: 21,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2023,8,11),
+            end: Date.UTC(2024,11,31),
+            name: 'فريق عمل لمتابعة مشاريع الحكومة الالكترونية',
+            assignee: 'عمر مفتاح ابوطلاق ',
+            y: 22,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2023,8,12),
+            end: Date.UTC(2024,11,31),
+            name: 'فريق عمل  لمراجعة الدورة المستندية ودليل الصلاحيات',
+            assignee: 'مدير / الموارد /المراجعه/الماليه/العمليات/التدريب',
+            y: 23,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2023,9,11),
+            end: Date.UTC(2024,11,31),
+            name: 'اللجنة الاستراتيجية الوطنية لامتثال تراخيص البرمجيات',
+            assignee: 'حاتم عبدالرزاق شعبان ',
+            y: 24,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2023,9,26),
+            end: Date.UTC(2024,11,31),
+            name: 'منصة رقمية لموظفي قطاع الاتصالات',
+            assignee: 'عمر مفتاح ابوطلاق ',
+            y: 25,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2023,9,30),
+            end: Date.UTC(2024,11,31),
+            name: 'صندوق التكافل الاجتماعي بالشركة القابضة ',
+            assignee: 'محمد الاندلسي ابوبكر ',
+            y: 26,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2023,10,9),
+            end: Date.UTC(2024,11,31),
+            name: 'لجنة متابعة استرداد استثمارات الاتصالات في افريقيا',
+            assignee: 'نادر سالم الزايدي ',
+            y: 27,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2023,10,13),
+            end: Date.UTC(2024,11,31),
+            name: 'مشروع محاربة انتحال هويات المشتركين',
+            assignee: 'خليفه عبدالله خليفه سالم الرياني ',
+            y: 28,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2024,0,7),
+            end: Date.UTC(2024,11,31),
+            name: 'لجنه للاشراف علي التجهيز لنقل الخدمات الصوتيه التابته ',
+            assignee: 'احمد محمد احمد الهادي ',
+            y: 29,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2024,1,4),
+            end: Date.UTC(2024,11,31),
+            name: 'coleago consultantفريق للاشراف ومتابعة العمل مع شركة ',
+            assignee: 'عبدالنعم زايد ونيس',
+            y: 30,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2024,1,8),
+            end: Date.UTC(2024,11,31),
+            name: 'لجنة عليا للاشراف وتنظيم بطولة كأس سوبر كب لاتصالات',
+            assignee: 'حسين محمود طويلب',
+            y: 31,
+            color:'#00B050'//green color
+        },{
+            start: Date.UTC(2024,1,14),
+            end: Date.UTC(2024,11,31),
+            name: 'فريق إدارة مشروع تطوير الاستراتيجية',
+            assignee: 'فؤاد محمود بن فضل ',
+            y: 32,
+            color:'#00B050'//green color
+        },
+
+        //Completed Committees
+
+        {
+            start: Date.UTC(2022,4,12),
+            end: Date.UTC(2024,11,31),
+            name: 'لجنة تحقق وتفاوض',
+            assignee: 'فرج الصويعي السائح ',
+            y: 33,
+            color:'#FF0000'//red color
+        },{
+            start: Date.UTC(2022,4,31),
+            end: Date.UTC(2024,11,31),
+            name: 'لجنة قياس مؤشرات الاداء الرئيسية',
+            assignee: 'خالد المهدي العيساوي ',
+            y: 34,
+            color:'#FF0000'//red color
+        },{
+            start: Date.UTC(2022,10,30),
+            end: Date.UTC(2024,11,31),
+            name: ' PMO لجنة لاستحدات مكتب إدارة المشروعات ',
+            assignee: 'عماد منصور ابولائحة ',
+            y: 35,
+            color:'#FF0000'//red color
+        },{
+            start: Date.UTC(2022,11,19),
+            end: Date.UTC(2024,11,31),
+            name: 'فريق عمل تنفيذ آليات تسوية الديون بين الشركات',
+            assignee: 'خالد مفتاح زغينين ',
+            y: 36,
+            color:'#FF0000'//red color
+        },{
+            start: Date.UTC(2022,11,27),
+            end: Date.UTC(2024,11,31),
+            name: 'اللجنة التنسيقية لمشروع التحول الرقمي لوازرة التعليم العالي',
+            assignee: 'خالد العيساوي ',
+            y: 37,
+            color:'#FF0000'//red color
+        },{
+            start: Date.UTC(2023,0,3),
+            end: Date.UTC(2024,11,31),
+            name: 'مشروع ضمان الإيرادات وإدارة الاحتيال',
+            assignee: 'فؤاد محمود بن فضل ',
+            y: 38,
+            color:'#FF0000'//red color
+        },{
+            start: Date.UTC(2023,1,22),
+            end: Date.UTC(2024,11,31),
+            name: 'فريق عمل لاعداد دليل إسترشادي للاصول الفنية ونماذج العقود',
+            assignee: 'خالد المهدي العيساوي ',
+            y: 39,
+            color:'#FF0000'//red color
+        },{
+            start: Date.UTC(2023,3,12),
+            end: Date.UTC(2024,11,31),
+            name: 'EVDO فريق عمل للاشراف علي إطفاء خدمة ',
+            assignee: 'احمد محمد احمد الهادي ',
+            y: 40,
+            color:'#FF0000'//red color
+        },{
+            start: Date.UTC(2023,4,23),
+            end: Date.UTC(2024,11,31),
+            name: 'فريق عمل لدراسة إنشاء شبكات وصول النفاد اللاسلكي',
+            assignee: 'عماد عمر الجعفري ',
+            y: 41,
+            color:'#FF0000'//red color
+        },{
+            start: Date.UTC(2023,4,31),
+            end: Date.UTC(2024,11,31),
+            name: 'اللجنه العليا للمتحف الدائم للبريد والاتصالات وتقرير حكم ',
+            assignee: 'فرج الصويعي السائح ',
+            y: 42,
+            color:'#FF0000'//red color
+        },{
+            start: Date.UTC(2023,10,19),
+            end: Date.UTC(2024,11,31),
+            name: 'فريق للاشراف علي نقل الملفات الوظيفية للعاملين بالشركة العامة للبريد',
+            assignee: 'فرج الصويعي السائح ',
+            y: 43,
+            color:'#FF0000'//red color
+        },{
+            start: Date.UTC(2023,11,20),
+            end: Date.UTC(2024,11,31),
+            name: 'لجنة تحقيق حول تردى وسؤ خدمات القطاع ',
+            assignee: 'حسين محمود طويلب',
+            y: 44,
+            color:'#FF0000'//red color
+        },
+
+        // unknown Committee tasks
+        {
+            start: Date.UTC(2022,4,24),
+            end: Date.UTC(2024,11,31),
+            name: 'لجنة تنفيذية لمشروع التحول الرقمي لمكتب النائب العام',
+            assignee: 'مدير عام الشركة القابضة',
+            y: 45,
+            color:'#000000'//Black color
+        },{
+            start: Date.UTC(2022,4,24),
+            end: Date.UTC(2024,11,31),
+            name: 'إتمام إجراءات الربط الضريبي للشركة القابضة والشركات التابعة',
+            assignee: 'محمد عمار ابوقرين ',
+            y: 46,
+            color:'#000000'//Black color
+        },{
+            start: Date.UTC(2022,6,26),
+            end: Date.UTC(2024,11,31),
+            name: 'مشروع التحول الرقمي لجهاز الامن الداخلي',
+            assignee: 'مدير عام الشركة القابضة',
+            y: 47,
+            color:'#000000'//Black color
+        },{
+            start: Date.UTC(2023,9,6),
+            end: Date.UTC(2024,11,31),
+            name: 'مشروع التحول الرقمي لوزارة الداخلية',
+            assignee: 'مدير عام الشركة القابضة',
+            y: 48,
+            color:'#000000'//Black color
+        },{
+            start: Date.UTC(2023,10,6),
+            end: Date.UTC(2024,11,31),
+            name: 'مشروع الانطلاقة ',
+            assignee: 'مدير عام الشركة القابضة',
+            y: 49,
+            color:'#000000'//Black color
+        },
+    
+    ],
+}],
+
+
+    exporting: {
+        sourceWidth: 1000
+    },
+    credits: {
+    enabled: false
+  },
+
+  
+    
+  
+});
+
+		</script>
+	</body>
+</html>
